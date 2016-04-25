@@ -24,8 +24,8 @@ from argparse import ArgumentParser, FileType
 def show_menu(args, menus):
     """Recursive function to walk menus dict and call dmenu cmd/exec result."""
     proc = Popen(args.menucmd.split(), stdin=PIPE, stdout=PIPE)
-    choice, _ = proc.communicate('\n'.join(menus))
-    choice = choice.strip()
+    choice, _ = proc.communicate('\n'.join(menus).encode('utf-8'))
+    choice = choice.strip().decode('utf-8')
     if choice:
         if isinstance(menus[choice], OrderedDict):
             # Sub-menu selected. Loop again
