@@ -16,6 +16,7 @@ Values can be:
 import json
 from collections import OrderedDict
 from subprocess import Popen, call, PIPE
+from argparse import ArgumentParser, FileType
 
 
 def show_menu(menus):
@@ -35,33 +36,23 @@ def show_menu(menus):
             call([choice])
 
 
-def main():
+def parse_args():
+    """Parse command-line arguments."""
+
+    parser = ArgumentParser()
+    parser.add_argument('-j', '--json', type=FileType(), required=True,
+                        help='JSON menu config file.')
+
+    args = parser.parse_args()
+    return args
+
+
+def main(args):
     """Define menu and call show_menu()"""
 
-    jsonmenu = """\
-{
-    "xeyes": null,
-    "terminals": {
-        "xterm": "/usr/bin/xterm",
-        "urxvt": null,
-        "vi MOTD": "vi /etc/motd"
-    },
-    "web": {
-        "firefox": null,
-        "chromium": null
-    },
-    "mail": {
-        "thunderbird": null,
-        "evolution": null,
-        "text-mail": {
-            "pine": null,
-            "mutt": null
-        }
-    }
-}"""
-
+    jsonmenu = args.json.read()
     show_menu(json.JSONDecoder(object_pairs_hook=OrderedDict).decode(jsonmenu))
 
 
 if __name__ == "__main__":
-    main()
+    main(parse_args())

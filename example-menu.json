@@ -1,0 +1,21 @@
+{
+    "xeyes": null,
+    "terminals": {
+        "xterm": "/usr/bin/xterm",
+        "urxvt": null,
+        "vi MOTD": "vi /etc/motd"
+    },
+    "web": {
+        "firefox": null,
+        "chromium": null
+    },
+    "mail": {
+        "thunderbird": null,
+        "evolution": null,
+        "text-mail": {
+            "pine": null,
+            "mutt": null
+        }
+    }
+}
+
