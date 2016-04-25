@@ -23,15 +23,16 @@ def show_menu(menus):
     proc = Popen(['dmenu'], stdin=PIPE, stdout=PIPE)
     choice, _ = proc.communicate('\n'.join(menus))
     choice = choice.strip()
-    if isinstance(menus[choice], OrderedDict):
-        # Sub-menu selected. Loop again
-        show_menu(menus[choice])
-    elif menus[choice]:
-        # Specific command defined
-        call(menus[choice].split())
-    else:
-        # Call the command title
-        call([choice])
+    if choice:
+        if isinstance(menus[choice], OrderedDict):
+            # Sub-menu selected. Loop again
+            show_menu(menus[choice])
+        elif menus[choice]:
+            # Specific command defined
+            call(menus[choice].split())
+        else:
+            # Call the command title
+            call([choice])
 
 
 def main():
